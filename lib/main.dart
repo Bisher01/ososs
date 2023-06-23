@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ososs/features/home/presentation/pages/home_screen.dart';
+import 'package:ososs/features/splash/presentaion/splash_screen.dart';
 
 import 'core/const/style.dart';
 
@@ -14,8 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: AppStyle.lightTheme(),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

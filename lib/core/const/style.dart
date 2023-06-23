@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 abstract class AppStyle {
+
   //colors
   static const Color whiteColor = Colors.white;
+  static const Color lightGreyColor = Color(0xFFD9D9D9);
   static const Color greyColor = Color(0xFF8F8989);
   static const Color shadowColor = Color(0x3F000000);
   static const Color blackColor = Colors.black;
@@ -16,15 +18,12 @@ abstract class AppStyle {
   static ThemeData lightTheme() => ThemeData(
         useMaterial3: true,
         primaryColor: primaryColor,
-        //dividerColor: lightGreyColor,
-        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+        dividerColor: greyColor,
+        scaffoldBackgroundColor: whiteColor,
         colorScheme: const ColorScheme.light(
           brightness: Brightness.light,
           primary: primaryColor,
-          //onPrimary: onPrimaryColor,
-          //secondary: secondaryColor,
           background: Color(0xFFFFFFFF),
-          //error: errorColor,
         ),
         fontFamily: '',
         textTheme: const TextTheme(
@@ -73,10 +72,6 @@ abstract class AppStyle {
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          // fillColor: creamColor,
-          //focusColor: ,
-          // errorStyle: TextStyle(height: 0, color: ),
-          //contentPadding: EdgeInsets.zero,
           hintStyle: TextStyle(color: blackColor.withOpacity(0.5)),
           focusedBorder: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -103,13 +98,17 @@ abstract class AppStyle {
             borderSide: const BorderSide(color: redColor),
           ),
         ),
-    textButtonTheme: const TextButtonThemeData(
-      style: ButtonStyle(
-        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12))
-        ))
-      )
-    )
+        textButtonTheme: const TextButtonThemeData(
+          style: ButtonStyle(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12),
+                ),
+              ),
+            ),
+          ),
+        ),
       );
 }
 
