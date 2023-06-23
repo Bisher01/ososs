@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:ososs/core/const/style.dart';
-import 'package:ososs/core/widgets/app_button.dart';
+import 'package:ososs/features/animations/presentation/blocs/animation_cubit.dart';
+import 'package:ososs/features/animations/presentation/widgets/animation_button.dart';
 
 class AnimationsScreen extends StatelessWidget {
   const AnimationsScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<AnimationCubit>(
+      create: (_) => AnimationCubit(),
+      child: const AnimationView(),
+    );
+  }
+}
+
+
+class AnimationView extends StatelessWidget {
+  const AnimationView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    final cubit = context.read<AnimationCubit>();
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppStyle.primaryColor,
-        centerTitle: false,
+        titleSpacing: 0,
+        title: const Text('Animations'),
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back),
-        ),
-        title: const Text(
-          'Animations',
-          style: TextStyle(
-            color: AppStyle.whiteColor,
-          ),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Padding(
@@ -35,45 +45,47 @@ class AnimationsScreen extends StatelessWidget {
             const Spacer(
               flex: 1,
             ),
-            AnimatedContainer(
-              duration: const Duration(seconds: 1),
-              width: width - 70,
-              height: width - 70,
-              decoration: BoxDecoration(
-                color: AppStyle.primaryColor,
-              ),
-            ),
+            BlocBuilder<AnimationCubit, AnimationState>(
+                builder: (context, state) {
+              state as AnimationDone;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                width: width - 70,
+                height: width - 70,
+                decoration: BoxDecoration(
+                  color: state.color,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(state.borderRadius),
+                  ),
+                ),
+              );
+            }),
             const Spacer(
               flex: 3,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: const BoxDecoration(
-                    color: AppStyle.darkBlueColor,
-                  ),
+                AnimationButton(
+                  color: AppStyle.darkBlueColor,
+                  onTab: () {
+                    cubit.animate(AppStyle.darkBlueColor, 0);
+                  },
                 ),
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: ShapeDecoration(
-                    color: AppStyle.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                AnimationButton(
+                  color: AppStyle.primaryColor,
+                  onTab: () {
+                    cubit.animate(AppStyle.primaryColor, 48);
+                  },
+                  borderRadius: 15,
                 ),
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: const BoxDecoration(
-                    color: AppStyle.lightRedColor,
-                    shape: BoxShape.circle,
-                  ),
-                )
+                AnimationButton(
+                  color: AppStyle.lightRedColor,
+                  onTab: () {
+                    cubit.animate(AppStyle.lightRedColor, 250);
+                  },
+                  borderRadius: 50,
+                ),
               ],
             ),
           ],

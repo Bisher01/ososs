@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ososs/core/const/style.dart';
 import 'package:ososs/core/widgets/app_button.dart';
 import 'package:ososs/features/animations/presentation/pages/animations_screen.dart';
+import 'package:ososs/features/pokemons/presentaion/pages/pokemon_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,7 +28,9 @@ class HomeScreen extends StatelessWidget {
             const TextField(
               decoration: InputDecoration(hintText: 'Enter Your Name'),
             ),
-            const SizedBox(height: 54,),
+            const SizedBox(
+              height: 54,
+            ),
             Text(
               'Your Name',
               style: Theme.of(context).textTheme.titleMedium,
@@ -60,7 +63,8 @@ class HomeScreen extends StatelessWidget {
               text: 'Go to page 1',
               color: AppStyle.darkBlueColor,
               action: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const AnimationsScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AnimationsScreen()));
               },
               hMargin: 0,
               vMargin: 22,
@@ -68,7 +72,10 @@ class HomeScreen extends StatelessWidget {
             AppButton(
               text: 'Go to page 2',
               color: AppStyle.primaryColor,
-              action: () {},
+              action: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const PokemonScreen()));
+              },
               hMargin: 0,
             ),
           ],
