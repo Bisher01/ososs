@@ -1,5 +1,7 @@
 import 'package:ososs/features/pokemons/domain/entities/pokemon_entity.dart';
 
+import '../../../../core/const/url_builder.dart';
+
 class PokemonListModel extends PokemonListEntity {
   const PokemonListModel({
     required int count,
@@ -16,10 +18,11 @@ class PokemonListModel extends PokemonListEntity {
   factory PokemonListModel.fromJson(Map<String, dynamic> json) {
     return PokemonListModel(
       count: json['count'],
-      next: json['next']??'',
-      previous: json['previous']??'',
-      results:
-          (json['results'] as List).map((e) => PokemonModel.fromJson(e)).toList(),
+      next: json['next'] ?? '',
+      previous: json['previous'] ?? '',
+      results: (json['results'] as List)
+          .map((e) => PokemonModel.fromJson(e))
+          .toList(),
     );
   }
 
@@ -29,18 +32,23 @@ class PokemonListModel extends PokemonListEntity {
     data['next'] = next;
     data['previous'] = previous;
     if (results.isNotEmpty) {
-      data['results'] = (results as List<PokemonModel>).map((v) => v.toJson()).toList();
+      data['results'] =
+          (results as List<PokemonModel>).map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class PokemonModel extends PokemonEntity{
-
-  const PokemonModel({
+class PokemonModel extends PokemonEntity {
+  PokemonModel({
     required String name,
     required String url,
-  }) : super(name: name, url:url);
+  }) : super(
+          name: name,
+          url: url,
+          image: UrlBuilder.buildGetPokemonImageUrl(
+              url.split('/').reversed.toList()[1]),
+        );
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     return PokemonModel(name: json['name'], url: json['url']);

@@ -95,7 +95,7 @@ class HttpService extends http.BaseClient {
         //     .clearStackAndNavigate(SignInPage.routeName);
       }
       //TODO: edit msg
-      throw ServerException(message: passwordErrorMessage);
+      throw ServerException(message: genericErrorMessage);
     }
     return response;
   }

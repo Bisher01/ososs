@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Task By Bisher',
       debugShowCheckedModeBanner: false,
       theme: AppStyle.lightTheme(),
       onGenerateRoute: (settings) {
@@ -47,10 +47,6 @@ class MyApp extends StatelessWidget {
           return PageRouteBuilder(
             pageBuilder: (context, first, second) {
               return const HomeScreen();
-              //   return MultiBlocProvider(providers: [
-              //     BlocProvider<HomeBloc>(create: (context) => di<HomeBloc>()),
-              //     BlocProvider<ProfileBloc>(create: (context) => di<ProfileBloc>()),
-              //   ], child: const HomePage());
             },
           );
         }

@@ -25,15 +25,18 @@ class PokemonListEntity extends Equatable {
 class PokemonEntity extends Equatable {
   final String name;
   final String url;
+  final String image;
 
   const PokemonEntity({
     required this.name,
     required this.url,
+    required this.image,
   });
 
   @override
   List<Object?> get props => [
         name,
         url,
+    image,
       ];
 }

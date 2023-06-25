@@ -9,8 +9,8 @@ class UrlBuilder {
     return '$_baseUrl/pokemon?limit=20&offset=$page';
   }
 
-  String buildGetPokemonImageUrl(int id){
-    return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/$id.png';
+  static String buildGetPokemonImageUrl(String id){
+    return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
   }
 
 }

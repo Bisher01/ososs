@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:ososs/core/data_sources/http_client.dart';
-import 'package:ososs/features/home/presentation/blocs/home_cubit.dart';
 import 'package:ososs/features/pokemons/data/data_sources/pokemon_data_source.dart';
 import 'package:ososs/features/pokemons/data/repositories/pokemon_repository_impl.dart';
 import 'package:ososs/features/pokemons/domain/repositories/pokemon_repository.dart';
@@ -19,8 +18,6 @@ Future<void> inject() async {
       () => HttpService(client: di(), unauthorizedRoutes: []));
   //==========Animation==========//
   di.registerFactory<AnimationCubit>(() => AnimationCubit());
-  //==========Home==========//
-  di.registerFactory<HomeCubit>(() => HomeCubit());
   //==========Pokemon==========//
   di.registerLazySingleton<PokemonDataSource>(
       () => PokemonDataSourceImpl(client: di()));

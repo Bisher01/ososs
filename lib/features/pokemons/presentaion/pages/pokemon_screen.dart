@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:ososs/dependency_injection.dart';
+import 'package:ososs/core/const/style.dart';
 import 'package:ososs/features/pokemons/domain/entities/pokemon_entity.dart';
 import 'package:ososs/features/pokemons/presentaion/blocs/pokemon_bloc.dart';
 import 'package:ososs/features/pokemons/presentaion/widgets/pokemon_card.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../../../core/widgets/exception_indicator.dart';
+import '../../../../core/widgets/loading_widget.dart';
 
 class PokemonScreen extends StatefulWidget {
   static const routeName = 'pokemon';
@@ -41,26 +42,72 @@ class _PokemonScreenState extends State<PokemonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        title: const Text('Pokemons'),
-      ),
-      body: PagedListView.separated(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<PokemonEntity>(
-          itemBuilder: (context, pokemon, index) {
-            return PokemonCard(
-              name: pokemon.name,
-            );
-          },
+    return BlocListener<PokemonBloc, PokemonListState>(
+      listener: (context, state) {
+        _pagingController.value = state.toPagingState();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          title: const Text('Pokemons'),
         ),
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            height: 27,
-          );
-        },
+        body: RefreshIndicator(
+          onRefresh: () {
+            _bloc.add(
+              const PokemonListRefreshed(),
+            );
+            final stateChangeFuture = _bloc.stream.first;
+            return stateChangeFuture;
+          },
+          child: PagedListView.separated(
+            pagingController: _pagingController,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 27),
+            builderDelegate: PagedChildBuilderDelegate<PokemonEntity>(
+              firstPageProgressIndicatorBuilder: (context) => const Center(
+                child: CircularProgressIndicator(
+                  color: AppStyle.primaryColor,
+                ),
+              ),
+              itemBuilder: (context, pokemon, index) {
+                return PokemonCard(
+                  name: pokemon.name,
+                  image: pokemon.image,
+                );
+              },
+              firstPageErrorIndicatorBuilder: (context) {
+                return ExceptionIndicator(
+                  onTryAgain: () {
+                    _bloc.add(
+                      const PokemonListFailedFetchRetried(),
+                    );
+                  },
+                );
+              },
+              newPageProgressIndicatorBuilder: (context) => ShimmerWidget(
+                height: 138,
+                width: MediaQuery.of(context).size.width,
+                borderRadiusGeometry:
+                    const BorderRadius.all(Radius.circular(14)),
+              ),
+            ),
+            separatorBuilder: (context, index) {
+              return const SizedBox(
+                height: 27,
+              );
+            },
+          ),
+        ),
       ),
+    );
+  }
+}
+
+extension on PokemonListState {
+  PagingState<int, PokemonEntity> toPagingState() {
+    return PagingState(
+      itemList: itemList,
+      nextPageKey: nextPage,
+      error: error,
     );
   }
 }
