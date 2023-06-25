@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:ososs/core/const/style.dart';
 import 'package:ososs/features/animations/presentation/blocs/animation_cubit.dart';
 import 'package:ososs/features/animations/presentation/widgets/animation_button.dart';
 
 class AnimationsScreen extends StatelessWidget {
-  const AnimationsScreen({super.key});
+  static const routeName = 'animations';
+  final String name;
+
+  const AnimationsScreen({super.key, required this.name});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AnimationCubit>(
       create: (_) => AnimationCubit(),
-      child: const AnimationView(),
+      child:  AnimationView(name: name,),
     );
   }
 }
 
-
 class AnimationView extends StatelessWidget {
-  const AnimationView({super.key});
+  final String name;
+  const AnimationView({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class AnimationView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Your Name',
+              name,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const Spacer(

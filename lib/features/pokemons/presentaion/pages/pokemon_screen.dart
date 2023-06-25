@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ososs/features/pokemons/presentaion/widgets/pokemon_card.dart';
 
 class PokemonScreen extends StatelessWidget {
+  static const routeName = 'pokemon';
   const PokemonScreen({super.key});
 
   @override

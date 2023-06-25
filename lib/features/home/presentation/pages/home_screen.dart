@@ -5,6 +5,8 @@ import 'package:ososs/features/animations/presentation/pages/animations_screen.d
 import 'package:ososs/features/pokemons/presentaion/pages/pokemon_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = 'home';
+
   const HomeScreen({super.key});
 
   @override
@@ -18,7 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     nameController = TextEditingController();
-    nameController.addListener(() => setState(() {}));
+    nameController.addListener(() => setState(() {
+          name = nameController.text;
+        }));
     super.initState();
   }
 
@@ -59,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 54,
               ),
               Text(
-                nameController.text.isNotEmpty?nameController.text:'Your name',
+                nameController.text.isNotEmpty
+                    ? nameController.text
+                    : 'Your name',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const Spacer(),
@@ -90,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Go to page 1',
                 color: AppStyle.darkBlueColor,
                 action: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AnimationsScreen()));
+                  Navigator.of(context).pushNamed(AnimationsScreen.routeName,
+                      arguments: {'name': name});
                 },
                 hMargin: 0,
                 vMargin: 22,
@@ -100,8 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Go to page 2',
                 color: AppStyle.primaryColor,
                 action: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PokemonScreen()));
+                  Navigator.of(context).pushNamed(PokemonScreen.routeName);
                 },
                 hMargin: 0,
               ),
