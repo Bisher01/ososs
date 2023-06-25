@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart';
 import 'package:ososs/core/data_sources/http_client.dart';
 import 'package:ososs/features/home/presentation/blocs/home_cubit.dart';
 import 'package:ososs/features/pokemons/data/data_sources/pokemon_data_source.dart';
@@ -13,6 +14,7 @@ import 'features/animations/presentation/blocs/animation_cubit.dart';
 final di = GetIt.instance;
 
 Future<void> inject() async {
+  di.registerLazySingleton(() => Client());
   di.registerLazySingleton(
       () => HttpService(client: di(), unauthorizedRoutes: []));
   //==========Animation==========//

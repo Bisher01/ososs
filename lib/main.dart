@@ -8,6 +8,7 @@ import 'package:ososs/features/splash/presentaion/splash_screen.dart';
 import 'core/const/style.dart';
 import 'dependency_injection.dart' as dii;
 import 'dependency_injection.dart';
+import 'features/pokemons/presentaion/blocs/pokemon_bloc.dart';
 import 'features/splash/presentaion/blocs/splash_bloc.dart';
 
 void main() async {
@@ -36,10 +37,10 @@ class MyApp extends StatelessWidget {
         }
         if (settings.name == PokemonScreen.routeName) {
           return PageRouteBuilder(pageBuilder: (context, first, second) {
-            // return BlocProvider<PokemonBloc>(
-            //   create: (context) => di<PokemonBloc>(),
-            return const PokemonScreen();
-            // );
+            return BlocProvider<PokemonBloc>(
+              create: (context) => di<PokemonBloc>(),
+              child: const PokemonScreen(),
+            );
           });
         }
         if (settings.name == HomeScreen.routeName) {

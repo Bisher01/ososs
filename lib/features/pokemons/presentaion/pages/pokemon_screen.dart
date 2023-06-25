@@ -41,32 +41,25 @@ class _PokemonScreenState extends State<PokemonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PokemonBloc>(
-      create: (context) => di<PokemonBloc>(),
-      child: Scaffold(
-        appBar: AppBar(
-          titleSpacing: 0,
-          title: const Text('Pokemons'),
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        title: const Text('Pokemons'),
+      ),
+      body: PagedListView.separated(
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate<PokemonEntity>(
+          itemBuilder: (context, pokemon, index) {
+            return PokemonCard(
+              name: pokemon.name,
+            );
+          },
         ),
-        body: PagedListView.separated(
-            pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<PokemonEntity>(
-                itemBuilder: (context, pokemon, index) {
-              return PokemonCard(name: pokemon.name,);
-            }),
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 27,
-              );
-            }),
-        // body: ListView.separated(
-        //   itemCount: 10,
-        //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 26),
-        //   separatorBuilder: (context, index) => const SizedBox(height: 27),
-        //   itemBuilder: (context, index) {
-        //     return PokemonCard();
-        //   },
-        // ),
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: 27,
+          );
+        },
       ),
     );
   }

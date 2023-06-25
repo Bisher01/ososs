@@ -3,8 +3,8 @@ import 'package:ososs/features/pokemons/domain/entities/pokemon_entity.dart';
 class PokemonListModel extends PokemonListEntity {
   const PokemonListModel({
     required int count,
-    required String next,
-    required String previous,
+    required String? next,
+    required String? previous,
     required List<PokemonModel> results,
   }) : super(
           count: count,
@@ -16,8 +16,8 @@ class PokemonListModel extends PokemonListEntity {
   factory PokemonListModel.fromJson(Map<String, dynamic> json) {
     return PokemonListModel(
       count: json['count'],
-      next: json['next'],
-      previous: json['previous'],
+      next: json['next']??'',
+      previous: json['previous']??'',
       results:
           (json['results'] as List).map((e) => PokemonModel.fromJson(e)).toList(),
     );
