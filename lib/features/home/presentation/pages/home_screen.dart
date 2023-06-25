@@ -96,8 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Go to page 1',
                 color: AppStyle.darkBlueColor,
                 action: () {
-                  Navigator.of(context).pushNamed(AnimationsScreen.routeName,
-                      arguments: {'name': name});
+                  Navigator.of(context).pushNamed(
+                    AnimationsScreen.routeName,
+                    arguments: {'name': name.isNotEmpty ? name : 'Your name'},
+                  );
                 },
                 hMargin: 0,
                 vMargin: 22,

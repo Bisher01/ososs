@@ -26,7 +26,7 @@ Future<void> inject() async {
       () => PokemonRepositoryImpl(pokemonDataSource: di()));
   di.registerLazySingleton<FetchPokemons>(
       () => FetchPokemons(pokemonRepository: di()));
-  di.registerFactory<PokemonBloc>(() => PokemonBloc());
+  di.registerFactory<PokemonBloc>(() => PokemonBloc(fetchPokemonsUseCase: di()));
   //==========Splash==========//
   di.registerFactory<SplashBloc>(() => SplashBloc());
 }

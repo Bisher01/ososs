@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/const/style.dart';
 
 class PokemonCard extends StatelessWidget {
-  const PokemonCard({super.key});
+  const PokemonCard({super.key,required this.name});
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class PokemonCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(top: 5, start: 16,end: 5),
               child: Text(
-                'Pokemon Name',
+                name,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleMedium,

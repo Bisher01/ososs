@@ -43,26 +43,28 @@ class MyApp extends StatelessWidget {
           });
         }
         if (settings.name == HomeScreen.routeName) {
-          return PageRouteBuilder(pageBuilder: (context, first, second) {
-            return const HomeScreen();
-            //   return MultiBlocProvider(providers: [
-            //     BlocProvider<HomeBloc>(create: (context) => di<HomeBloc>()),
-            //     BlocProvider<ProfileBloc>(create: (context) => di<ProfileBloc>()),
-            //   ], child: const HomePage());
-          });
+          return PageRouteBuilder(
+            pageBuilder: (context, first, second) {
+              return const HomeScreen();
+              //   return MultiBlocProvider(providers: [
+              //     BlocProvider<HomeBloc>(create: (context) => di<HomeBloc>()),
+              //     BlocProvider<ProfileBloc>(create: (context) => di<ProfileBloc>()),
+              //   ], child: const HomePage());
+            },
+          );
         }
         if (settings.name == AnimationsScreen.routeName) {
           final arg = settings.arguments as Map<String, dynamic>;
-          return PageRouteBuilder(pageBuilder: (context, first, second) {
-            return AnimationsScreen(
-              name: arg['name'],
-            );
-          });
+          return PageRouteBuilder(
+            pageBuilder: (context, first, second) {
+              return AnimationsScreen(
+                name: arg['name'],
+              );
+            },
+          );
         }
         return null;
       },
-      //onGenerateRoute: (settings) => onGenerateRoutes(settings),
-      //TODO: change to splash
       initialRoute: SplashScreen.routeName,
     );
   }
